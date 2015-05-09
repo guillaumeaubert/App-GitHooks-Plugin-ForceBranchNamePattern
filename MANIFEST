@@ -1,6 +1,7 @@
 .githooksrc
 .perlcriticrc
 .travis.yml
+LICENSE
 README.md
 example/examples.txt
 xt/changes.t
