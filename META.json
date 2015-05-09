@@ -1,0 +1,57 @@
+{
+   "abstract" : "Require branch names to match a given pattern before they can be pushed to the origin.",
+   "author" : [
+      "Guillaume Aubert <aubertg@cpan.org>"
+   ],
+   "dynamic_config" : 1,
+   "generated_by" : "Module::Build version 0.4205",
+   "license" : [
+      "gpl_3"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "App-GitHooks-Plugin-ForceBranchNamePattern",
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "Test::FailWarnings" : "0",
+            "Test::Git" : "0",
+            "Test::More" : "0.94"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "Module::Build" : "0"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "App::GitHooks" : "0",
+            "Log::Any" : "0",
+            "perl" : "5.008"
+         }
+      }
+   },
+   "provides" : {
+      "App::GitHooks::Plugin::ForceBranchNamePattern" : {
+         "file" : "lib/App/GitHooks/Plugin/ForceBranchNamePattern.pm",
+         "version" : "v1.0.0"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/guillaumeaubert/App-GitHooks-Plugin-ForceBranchNamePattern/issues"
+      },
+      "homepage" : "https://metacpan.org/release/App-GitHooks-Plugin-ForceBranchNamePattern",
+      "license" : [
+         "http://www.gnu.org/licenses/gpl-3.0.txt"
+      ],
+      "repository" : {
+         "url" : "https://github.com/guillaumeaubert/App-GitHooks-Plugin-ForceBranchNamePattern"
+      }
+   },
+   "version" : "v1.0.0"
+}
