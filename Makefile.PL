@@ -12,11 +12,13 @@ WriteMakefile
   'EXE_FILES' => [],
   'VERSION_FROM' => 'lib/App/GitHooks/Plugin/ForceBranchNamePattern.pm',
   'PREREQ_PM' => {
-                   'Test::More' => '0.94',
                    'App::GitHooks' => 0,
                    'Test::Git' => 0,
+                   'Test::Exception' => 0,
+                   'Capture::Tiny' => 0,
                    'Test::FailWarnings' => 0,
-                   'Log::Any' => 0
+                   'Log::Any' => 0,
+                   'Test::More' => '0.94'
                  }
 )
 ;

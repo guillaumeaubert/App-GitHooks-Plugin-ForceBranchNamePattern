@@ -41,6 +41,8 @@ my $builder = $class->new(
 	dist_version_from    => 'lib/App/GitHooks/Plugin/ForceBranchNamePattern.pm',
 	build_requires       =>
 	{
+		'Capture::Tiny'        => 0,
+		'Test::Exception'      => 0,
 	  'Test::FailWarnings'   => 0,
 		'Test::Git'            => 0,
 		'Test::More'           => 0.94,
