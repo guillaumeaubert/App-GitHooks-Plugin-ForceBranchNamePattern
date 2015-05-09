@@ -4,6 +4,8 @@
 LICENSE
 README.md
 example/examples.txt
+t/00-load.t
+t/01-git_version.t
 xt/changes.t
 xt/kwalitee.t
 xt/manifest.t
