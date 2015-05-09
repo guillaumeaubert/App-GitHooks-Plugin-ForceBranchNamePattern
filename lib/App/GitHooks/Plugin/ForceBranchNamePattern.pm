@@ -109,10 +109,98 @@ sub run_pre_push
 	my $stdin = delete( $args{'stdin'} );
 
 	$log->info( 'Entering ForceBranchNamePattern.' );
+
+	my $config = $app->get_config();
+	my $repository = $app->get_repository();
+
+	# Check if we have a branch name pattern specified in the config. If not,
+	# skip this plugin.
+	my $branch_name_pattern = $config->get_regex( 'ForceBranchNamePattern', 'branch_name_pattern' );
+	if ( !defined( $branch_name_pattern ) )
+	{
+		$log->infof("No 'branch_name_pattern' specified in the [ForceBranchNamePattern] section of the config, skipping plugin.");
+		return $PLUGIN_RETURN_SKIPPED;
+	}
+
+	# Check if we are pushing any branches.
+	my @branch_names = get_pushed_branch_names( $app, $stdin );
+	$log->infof( "Found %s branch(es) to push.", scalar( @branch_names ) );
+	return $PLUGIN_RETURN_SKIPPED
+		if ( scalar( @branch_names ) == 0 );
+
+	# Check if the branch names match the pattern.
+	my @incorrect_branch_names = ();
+	foreach my $branch_name ( @branch_names )
+	{
+		next if $branch_name =~ $branch_name_pattern;
+		push( @incorrect_branch_names, $branch_name );
+	}
+
+	if ( scalar( @incorrect_branch_names ) != 0 )
+	{
+		die sprintf(
+			"The following %s %s not match the pattern enforced by the git hooks configuration file: %s.\n" .
+			"Branches must match the following pattern: %s.",
+			scalar( @incorrect_branch_names ) == 1 ? 'branch' : 'branches',
+			scalar( @incorrect_branch_names ) == 1 ? 'does' : 'do',
+			join( ', ', @incorrect_branch_names ),
+			"/$branch_name_pattern/",
+		) . "\n";
+	}
+
+	return $PLUGIN_RETURN_PASSED;
 }
 
 
 =head1 FUNCTIONS
+
+=head2 get_pushed_branches()
+
+Retrieve a list of the branches being pushed with C<git push>.
+
+	my $tags = App::GitHooks::Plugin::ForceBranchNamePattern::get_pushed_branches(
+		$app,
+		$stdin,
+	);
+
+Arguments:
+
+=over 4
+
+=item * $app I<(mandatory)>
+
+An C<App::GitHooks> object.
+
+=item * $stdin I<(mandatory)>
+
+The content provided by git on stdin, corresponding to a list of references
+being pushed.
+
+=back
+
+=cut
+
+sub get_pushed_branches
+{
+	my ( $app, $stdin ) = @_;
+	my $config = $app->get_config();
+
+	# Analyze each reference being pushed.
+	my $branches = {};
+	foreach my $line ( @$stdin )
+	{
+		chomp( $line );
+		$log->debugf( 'Parse STDIN line >%s<.', $line );
+
+		# Extract the branch information.
+		my ( $branch ) = ( $line =~ /^refs\/heads\/(\S+)\b/x );
+		next if !defined( $branch );
+		$log->infof( "Found branch '%s'.", $branch );
+		$branches->{ $branch } = 1;
+	}
+
+	return keys %$branches;
+}
 
 
 =head1 BUGS
