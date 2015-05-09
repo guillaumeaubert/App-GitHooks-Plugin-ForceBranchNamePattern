@@ -8,6 +8,13 @@ App-GitHooks-Plugin-ForceBranchNamePattern
 App::GitHooks plugin to force pushed branch names to match a given pattern.
 
 
+MINIMUM GIT VERSION
+-------------------
+
+This plugin relies on the pre-push hook, which is only available as of git
+v1.8.2.
+
+
 INSTALLATION
 ------------
 

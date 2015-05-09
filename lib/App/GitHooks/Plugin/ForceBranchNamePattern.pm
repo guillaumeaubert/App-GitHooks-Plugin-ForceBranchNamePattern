@@ -43,6 +43,12 @@ Version 1.0.0
 our $VERSION = '1.0.0';
 
 
+=head1 MINIMUM GIT VERSION
+
+This plugin relies on the pre-push hook, which is only available as of git
+v1.8.2.
+
+
 =head1 CONFIGURATION OPTIONS
 
 This plugin supports the following options in the
