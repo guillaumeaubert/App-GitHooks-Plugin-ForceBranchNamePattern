@@ -2,6 +2,7 @@
 .perlcriticrc
 .travis.yml
 README.md
+example/examples.txt
 xt/changes.t
 xt/kwalitee.t
 xt/manifest.t
