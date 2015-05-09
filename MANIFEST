@@ -1,3 +1,6 @@
+.githooksrc
+.perlcriticrc
+.travis.yml
 README.md
 xt/changes.t
 xt/kwalitee.t
