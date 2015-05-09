@@ -13,6 +13,7 @@ Makefile.PL
 README.md
 example/examples.txt
 ignore.txt
+lib/App/GitHooks/Plugin/ForceBranchNamePattern.pm
 t/00-load.t
 t/01-git_version.t
 xt/changes.t
