@@ -224,7 +224,7 @@ You can also look for information at:
 
 =item * GitHub's request tracker
 
-L<https://github.com/guillaumeaubert/App-GitHooks-Plugin-RequireTicketID/issues>
+L<https://github.com/guillaumeaubert/App-GitHooks-Plugin-ForceBranchNamePattern/issues>
 
 =item * AnnoCPAN: Annotated CPAN documentation
 
@@ -236,7 +236,7 @@ L<http://cpanratings.perl.org/d/app-githooks-plugin-forcebranchnamepattern>
 
 =item * MetaCPAN
 
-L<https://metacpan.org/release/App-GitHooks-Plugin-RequireTicketID>
+L<https://metacpan.org/release/App-GitHooks-Plugin-ForceBranchNamePattern>
 
 =back
 
