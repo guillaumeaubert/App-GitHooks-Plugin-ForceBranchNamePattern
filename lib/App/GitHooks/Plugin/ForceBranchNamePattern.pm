@@ -71,7 +71,7 @@ you to push them to the origin.
 
 	# Require branches to start with a JIRA ticket ID followed by an underscore,
 	# but they can have an optional user prefix.
-	branch_name_pattern = /^(?:[^\/]\/)DEV-\d+_/
+	branch_name_pattern = /^(?:[^\/]+\/)?DEV-\d+_/
 
 
 =head1 METHODS
