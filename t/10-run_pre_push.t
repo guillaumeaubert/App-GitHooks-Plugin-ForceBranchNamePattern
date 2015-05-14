@@ -14,6 +14,8 @@ use App::GitHooks::Test qw( ok_add_files ok_setup_repository );
 
 
 ## no critic (RegularExpressions::RequireExtendedFormatting)
+## no critic (RegularExpressions::ProhibitComplexRegexes)
+
 
 # The plugin relies on the pre-push hook, which is only available as of git
 # v1.8.2.
@@ -35,7 +37,7 @@ my $tests =
 		create_branch  => 'test_',
 		config         => "[ForceBranchNamePattern]\n"
 			. 'branch_name_pattern = /^[a-zA-Z0-9]+$/' . "\n",
-		expected       => qr//,
+		expected       => qr/\QThe following branch does not match the pattern enforced by the git hooks configuration file: test_.\E/,
 		exit_status    => 1,
 	},
 ];
