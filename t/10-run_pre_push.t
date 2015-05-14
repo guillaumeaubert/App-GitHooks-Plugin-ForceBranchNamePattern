@@ -108,7 +108,13 @@ foreach my $test ( @$tests )
 			lives_ok(
 				sub
 				{
-					$local_repository->run( 'checkout', '-b', $test->{'create_branch'} );
+					my $output = Capture::Tiny::capture_merged(
+						sub
+						{
+							$local_repository->run( 'checkout', '-b', $test->{'create_branch'} );
+						}
+					);
+					note( $output );
 				},
 				'Create the test branch.',
 			);
