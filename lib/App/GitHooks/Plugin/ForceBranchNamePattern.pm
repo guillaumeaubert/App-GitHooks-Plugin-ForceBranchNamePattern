@@ -167,11 +167,11 @@ sub run_pre_push
 
 =head1 FUNCTIONS
 
-=head2 get_pushed_branches()
+=head2 get_pushed_branch_names()
 
 Retrieve a list of the branches being pushed with C<git push>.
 
-	my $tags = App::GitHooks::Plugin::ForceBranchNamePattern::get_pushed_branches(
+	my $tags = App::GitHooks::Plugin::ForceBranchNamePattern::get_pushed_branch_names(
 		$app,
 		$stdin,
 	);
@@ -193,7 +193,7 @@ being pushed.
 
 =cut
 
-sub get_pushed_branches
+sub get_pushed_branch_names
 {
 	my ( $app, $stdin ) = @_;
 	my $config = $app->get_config();
