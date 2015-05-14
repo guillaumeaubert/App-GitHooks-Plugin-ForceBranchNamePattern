@@ -24,8 +24,9 @@ has_git( '1.8.2' );
 # List of tests to perform.
 my $tests =
 [
+	# Test alphanumeric branches.
 	{
-		name           => 'Require alphanumeric branches only.',
+		name           => 'Branch passes alphanumeric only requirement.',
 		create_branch  => 'test',
 		config         => "[ForceBranchNamePattern]\n"
 			. 'branch_name_pattern = /^[a-zA-Z0-9]+$/' . "\n",
@@ -33,7 +34,7 @@ my $tests =
 		exit_status    => 0,
 	},
 	{
-		name           => 'Require alphanumeric branches only.',
+		name           => 'Branch fails alphanumeric only requirement.',
 		create_branch  => 'test_',
 		config         => "[ForceBranchNamePattern]\n"
 			. 'branch_name_pattern = /^[a-zA-Z0-9]+$/' . "\n",
