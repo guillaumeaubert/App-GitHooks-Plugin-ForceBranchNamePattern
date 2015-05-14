@@ -41,6 +41,50 @@ my $tests =
 		expected       => qr/\QThe following branch does not match the pattern enforced by the git hooks configuration file: test_.\E/,
 		exit_status    => 1,
 	},
+
+	# Test branches starting with a JIRA ID.
+	{
+		name           => 'Branch passes JIRA ID followed by an underscore.',
+		create_branch  => 'DEV-123_test_feature',
+		config         => "[ForceBranchNamePattern]\n"
+			. 'branch_name_pattern = /^DEV-\d+_/' . "\n",
+		expected       => qr/\Q[new branch]\E\s+\QDEV-123_test_feature -> DEV-123_test_feature\E/,
+		exit_status    => 0,
+	},
+	{
+		name           => 'Branch fails JIRA ID followed by an underscore.',
+		create_branch  => 'DEV-123',
+		config         => "[ForceBranchNamePattern]\n"
+			. 'branch_name_pattern = /^DEV-\d+_/' . "\n",
+		expected       => qr/\QThe following branch does not match the pattern enforced by the git hooks configuration file: DEV-123.\E/,
+		exit_status    => 1,
+	},
+
+	# Test prefixed branches starting with a JIRA ID.
+	{
+		name           => 'Branch passes JIRA ID followed by an underscore, no prefix.',
+		create_branch  => 'DEV-123_test_feature',
+		config         => "[ForceBranchNamePattern]\n"
+			. 'branch_name_pattern = /^(?:[^\/]+\/)?DEV-\d+_/' . "\n",
+		expected       => qr/\Q[new branch]\E\s+\QDEV-123_test_feature -> DEV-123_test_feature\E/,
+		exit_status    => 0,
+	},
+	{
+		name           => 'Branch passes JIRA ID followed by an underscore, with prefix.',
+		create_branch  => 'ga/DEV-123_test_feature',
+		config         => "[ForceBranchNamePattern]\n"
+			. 'branch_name_pattern = /^(?:[^\/]+\/)?DEV-\d+_/' . "\n",
+		expected       => qr/\Q[new branch]\E\s+\Qga\/DEV-123_test_feature -> ga\/DEV-123_test_feature\E/,
+		exit_status    => 0,
+	},
+	{
+		name           => 'Branch fails JIRA ID followed by an underscore, with prefix.',
+		create_branch  => 'ga/DEV-123',
+		config         => "[ForceBranchNamePattern]\n"
+			. 'branch_name_pattern = /^(?:[^\/]+\/)DEV-\d+_/' . "\n",
+		expected       => qr/\QThe following branch does not match the pattern enforced by the git hooks configuration file: ga\/DEV-123\E/,
+		exit_status    => 1,
+	},
 ];
 
 plan( tests => scalar( @$tests ) );
