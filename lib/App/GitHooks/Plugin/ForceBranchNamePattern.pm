@@ -124,7 +124,11 @@ sub run_pre_push
 
 	# Check if we are pushing any branches.
 	my @branch_names = get_pushed_branch_names( $app, $stdin );
-	$log->infof( "Found %s branch(es) to push.", scalar( @branch_names ) );
+	$log->infof(
+		"Found %s branch(es) to push: %s",
+		scalar( @branch_names ),
+		join( ', ', @branch_names ),
+	);
 	return $PLUGIN_RETURN_SKIPPED
 		if ( scalar( @branch_names ) == 0 );
 
@@ -132,20 +136,29 @@ sub run_pre_push
 	my @incorrect_branch_names = ();
 	foreach my $branch_name ( @branch_names )
 	{
-		next if $branch_name =~ $branch_name_pattern;
-		push( @incorrect_branch_names, $branch_name );
+		if ( $branch_name =~ $branch_name_pattern )
+		{
+			$log->infof( 'Branch %s matches the required pattern.', $branch_name );
+		}
+		else
+		{
+			$log->infof( 'Branch %s does not match the required pattern.', $branch_name );
+			push( @incorrect_branch_names, $branch_name );
+		}
 	}
 
 	if ( scalar( @incorrect_branch_names ) != 0 )
 	{
-		die sprintf(
+		my $error = sprintf(
 			"The following %s %s not match the pattern enforced by the git hooks configuration file: %s.\n" .
 			"Branches must match the following pattern: %s.",
 			scalar( @incorrect_branch_names ) == 1 ? 'branch' : 'branches',
 			scalar( @incorrect_branch_names ) == 1 ? 'does' : 'do',
 			join( ', ', @incorrect_branch_names ),
 			"/$branch_name_pattern/",
-		) . "\n";
+		);
+		$log->errorf( 'Reporting error back to the hook handler! %s', $error );
+		die "$error\n";
 	}
 
 	return $PLUGIN_RETURN_PASSED;
