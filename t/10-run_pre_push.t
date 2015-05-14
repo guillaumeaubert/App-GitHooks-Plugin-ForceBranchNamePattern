@@ -50,7 +50,7 @@ foreach my $test ( @$tests )
 		$test->{'name'},
 		sub
 		{
-			plan( tests => 8 );
+			plan( tests => 9 );
 
 			my $local_repository = ok_setup_repository(
 				cleanup_test_repository => 0,
@@ -78,9 +78,21 @@ foreach my $test ( @$tests )
 				'Commit the changes.',
 			);
 
-			my $remote_repository = Test::Git::test_repository(
-				clone => [ $local_repository->git_dir() ],
-				temp  => [ CLEANUP => 0 ],
+			my $remote_repository;
+			lives_ok(
+				sub
+				{
+					my $output = Capture::Tiny::capture_merged(
+						sub
+						{
+							$remote_repository = Test::Git::test_repository(
+								clone => [ $local_repository->git_dir() ],
+								temp  => [ CLEANUP => 0 ],
+							);
+						}
+					);
+					note( $output );
+				}
 			);
 
 			# Set the test remote so that the local repository can push.
