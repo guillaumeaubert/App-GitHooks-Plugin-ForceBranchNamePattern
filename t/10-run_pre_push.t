@@ -120,25 +120,25 @@ foreach my $test ( @$tests )
 			);
 
 			# Try to push.
-			my $stderr;
+			my $output;
 			my $exit_status;
 			lives_ok(
 				sub
 				{
-					$stderr = Capture::Tiny::capture_stderr(
+					$output = Capture::Tiny::capture_merged(
 						sub
 						{
 							print $local_repository->run( 'push', '--set-upstream', 'origin', $test->{'create_branch'} );
 							$exit_status = $? >> 8;
 						}
 					);
-					note( $stderr );
+					note( $output );
 				},
 				'Push the branch to the remote.',
 			);
 
 			like(
-				$stderr,
+				$output,
 				$test->{'expected'},
 				"The output matches expected results.",
 			);
