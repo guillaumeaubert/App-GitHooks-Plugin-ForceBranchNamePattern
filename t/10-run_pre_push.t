@@ -111,7 +111,7 @@ foreach my $test ( @$tests )
 					my $output = Capture::Tiny::capture_merged(
 						sub
 						{
-							$local_repository->run( 'checkout', '-b', $test->{'create_branch'} );
+							print $local_repository->run( 'checkout', '-b', $test->{'create_branch'} );
 						}
 					);
 					note( $output );
