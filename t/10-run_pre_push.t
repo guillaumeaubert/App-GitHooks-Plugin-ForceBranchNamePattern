@@ -128,7 +128,7 @@ foreach my $test ( @$tests )
 					$stderr = Capture::Tiny::capture_stderr(
 						sub
 						{
-							$local_repository->run( 'push', 'origin', $test->{'create_branch'} );
+							print $local_repository->run( 'push', '--set-upstream', 'origin', $test->{'create_branch'} );
 							$exit_status = $? >> 8;
 						}
 					);
