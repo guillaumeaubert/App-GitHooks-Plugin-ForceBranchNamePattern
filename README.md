@@ -4,6 +4,7 @@ App-GitHooks-Plugin-ForceBranchNamePattern
 [![Build Status](https://travis-ci.org/guillaumeaubert/App-GitHooks-Plugin-ForceBranchNamePattern.svg?branch=master)](https://travis-ci.org/guillaumeaubert/App-GitHooks-Plugin-ForceBranchNamePattern)
 [![Coverage Status](https://coveralls.io/repos/guillaumeaubert/App-GitHooks-Plugin-ForceBranchNamePattern/badge.svg?branch=master)](https://coveralls.io/r/guillaumeaubert/App-GitHooks-Plugin-ForceBranchNamePattern?branch=master)
 [![CPAN](https://img.shields.io/cpan/v/App-GitHooks-Plugin-ForceBranchNamePattern.svg)](https://metacpan.org/release/App-GitHooks-Plugin-ForceBranchNamePattern)
+[![License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://opensource.org/licenses/GPL-3.0)
 
 App::GitHooks plugin to force pushed branch names to match a given pattern.
 
