@@ -8,6 +8,7 @@ use warnings;
 use Capture::Tiny;
 use Test::Exception;
 use Test::Git;
+use Test::Requires::Git;
 use Test::More;
 
 use App::GitHooks::Test qw( ok_add_files ok_setup_repository );
@@ -19,7 +20,7 @@ use App::GitHooks::Test qw( ok_add_files ok_setup_repository );
 
 # The plugin relies on the pre-push hook, which is only available as of git
 # v1.8.2.
-has_git( '1.8.2' );
+test_requires_git( '1.8.2' );
 
 # List of tests to perform.
 my $tests =
