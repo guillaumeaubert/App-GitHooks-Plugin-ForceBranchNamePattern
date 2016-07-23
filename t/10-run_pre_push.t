@@ -86,6 +86,41 @@ my $tests =
 		expected       => qr/\QThe following branch does not match the pattern enforced by the git hooks configuration file: ga\/DEV-123\E/,
 		exit_status    => 1,
 	},
+
+	# Test project prefixes.
+	{
+		name           => 'Branch passes JIRA ID using project prefixes set in config.',
+		create_branch  => 'DEV-123_test_feature',
+		config         => "[_]\n"
+			. "project_prefixes = DEV, OPS\n"
+			. "\n"
+			. "[ForceBranchNamePattern]\n"
+			. 'branch_name_pattern = /^(?:[^\/]+\/)?$project_prefixes-\d+_/' . "\n",
+		expected       => qr/\Q[new branch]\E\s+\QDEV-123_test_feature -> DEV-123_test_feature\E/,
+		exit_status    => 0,
+	},
+	{
+		name           => 'Branch fails JIRA ID with a project prefix not defined in the list of valid project prefixes.',
+		create_branch  => 'ga/DEV-123',
+		config         => "[_]\n"
+			. "project_prefixes = OPS, IT\n"
+			. "\n"
+			. "[ForceBranchNamePattern]\n"
+			. 'branch_name_pattern = /^(?:[^\/]+\/)$project_prefixes-\d+_/' . "\n",
+		expected       => qr/\QThe following branch does not match the pattern enforced by the git hooks configuration file: ga\/DEV-123\E/,
+		exit_status    => 1,
+	},
+	{
+		name           => '"branch_name_pattern" uses $project_prefixes, but "project_prefix" is not defined.',
+		create_branch  => 'ga/DEV-123',
+		config         => "[_]\n"
+			. "\n"
+			. "[ForceBranchNamePattern]\n"
+			. 'branch_name_pattern = /^(?:[^\/]+\/)$project_prefixes-\d+_/' . "\n",
+		expected       => qr/\QNo 'project_prefixes' values specified, but required in the pattern specified by 'branch_name_pattern' in the [ForceBranchNamePattern] section of the config.\E/,
+		exit_status    => 1,
+	},
+
 ];
 
 plan( tests => scalar( @$tests ) );

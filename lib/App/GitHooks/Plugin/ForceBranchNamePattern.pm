@@ -51,17 +51,32 @@ v1.8.2.
 
 =head1 CONFIGURATION OPTIONS
 
-This plugin supports the following options in the
-C<[ForceBranchNamePattern]> section of your C<.githooksrc> file.
+This plugin supports the following options in your C<.githooksrc> file.
 
+	project_prefixes = OPS, DEV
+	
 	[ForceBranchNamePattern]
 	branch_name_pattern = /^[a-zA-Z0-9]+$/
+
+
+=head2 project_prefixes
+
+Optional, a comma-separated list of project prefixes in case you want to use
+them in the C<branch_name_pattern> regex.
+
+This setting must be added in the main section of your C<.githooksrc> file, as
+it is used by multiple plugins.
+
+	project_prefixes = OPS, DEV
 
 
 =head2 branch_name_pattern
 
 A regular expression that will be used to check branch names before allowing
 you to push them to the origin.
+
+This setting must be added in the C<[ForceBranchNamePattern]> section of your
+C<.githooksrc> file.
 
 	# Require alphanumeric branches only.
 	branch_name_pattern = /^[a-zA-Z0-9]+$/
@@ -72,6 +87,9 @@ you to push them to the origin.
 	# Require branches to start with a JIRA ticket ID followed by an underscore,
 	# but they can have an optional user prefix.
 	branch_name_pattern = /^(?:[^\/]+\/)?DEV-\d+_/
+
+	# Re-use "project_prefixes" defined in the main section of the config.
+	branch_name_pattern = /^$project_prefixes-\d+_/
 
 
 =head1 METHODS
@@ -122,10 +140,27 @@ sub run_pre_push
 		return $PLUGIN_RETURN_SKIPPED;
 	}
 
+	# Insert valid project prefixes in the branch name verification regex.
+	if ( $branch_name_pattern =~ /\$project_prefixes/ )
+	{
+		# Make sure we have valid project prefixes defined in the config.
+		my $project_prefix_regex = App::GitHooks::Utils::get_project_prefix_regex( $app );
+		if ( !defined( $project_prefix_regex ) || ( $project_prefix_regex eq '' ) )
+		{
+			my $error =
+				"No 'project_prefixes' values specified, but required in the pattern " .
+				"specified by 'branch_name_pattern' in the [ForceBranchNamePattern] " .
+				"section of the config. Please fix your .githooksrc config.";
+			$log->error( $error );
+			die "$error\n";
+		}
+		$branch_name_pattern =~ s/\$project_prefixes/$project_prefix_regex/g;
+	}
+
 	# Check if we are pushing any branches.
 	my @branch_names = get_pushed_branch_names( $app, $stdin );
 	$log->infof(
-		"Found %s branch(es) to push: %s",
+		"Found %s branch(es) to push: %s.",
 		scalar( @branch_names ),
 		join( ', ', @branch_names ),
 	);
