@@ -121,6 +121,14 @@ my $tests =
 		exit_status    => 1,
 	},
 
+	# Test missing branch_name_pattern.
+	{
+		name           => 'branch_name_pattern is not defined in the config.',
+		create_branch  => 'DEV-123_test_feature',
+		config         => "[ForceBranchNamePattern]\n",
+		expected       => qr/\Q[new branch]\E\s+\QDEV-123_test_feature -> DEV-123_test_feature\E/,
+		exit_status    => 0,
+	},
 ];
 
 plan( tests => scalar( @$tests ) );
