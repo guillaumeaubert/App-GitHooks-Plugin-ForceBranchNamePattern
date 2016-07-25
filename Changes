@@ -1,5 +1,8 @@
 Revision history for App-GitHooks-Plugin-ForceBranchNamePattern
 
+v1.1.1  2016-07-24
+        - Added missing use.
+
 v1.1.0  2016-07-24
         - Relicensed under Perl 5 terms.
         - Replaced has_git() by test_requires_git() (GH-1). Thank you, BooK!
