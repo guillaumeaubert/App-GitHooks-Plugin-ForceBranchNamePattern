@@ -99,7 +99,7 @@ C<.githooksrc> file.
 
 Code to execute as part of the pre-push hook.
 
-  my $plugin_return_code = App::GitHooks::Plugin::ForceBranchNamePattern->run_pre_push(
+	my $plugin_return_code = App::GitHooks::Plugin::ForceBranchNamePattern->run_pre_push(
 		app   => $app,
 		stdin => $stdin,
 	);
