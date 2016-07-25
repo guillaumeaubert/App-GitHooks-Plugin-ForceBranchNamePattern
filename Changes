@@ -1,5 +1,8 @@
 Revision history for App-GitHooks-Plugin-ForceBranchNamePattern
 
+v1.1.3  2016-07-24
+        - Improved test coverage.
+
 v1.1.2  2016-07-24
         - Fixed formatting in documentation.
 
