@@ -10,6 +10,7 @@ use Log::Any qw($log);
 
 # Internal dependencies.
 use App::GitHooks::Constants qw( :PLUGIN_RETURN_CODES );
+use App::GitHooks::Utils;
 
 # Uncomment to see debug information.
 #use Log::Any::Adapter ('Stderr');
