@@ -40,7 +40,7 @@
    "provides" : {
       "App::GitHooks::Plugin::ForceBranchNamePattern" : {
          "file" : "lib/App/GitHooks/Plugin/ForceBranchNamePattern.pm",
-         "version" : "v1.0.0"
+         "version" : "v1.1.0"
       }
    },
    "release_status" : "stable",
@@ -56,5 +56,5 @@
          "url" : "https://github.com/guillaumeaubert/App-GitHooks-Plugin-ForceBranchNamePattern"
       }
    },
-   "version" : "v1.0.0"
+   "version" : "v1.1.0"
 }

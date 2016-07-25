@@ -3,23 +3,23 @@ require 5.008;
 use ExtUtils::MakeMaker;
 WriteMakefile
 (
-  'VERSION_FROM' => 'lib/App/GitHooks/Plugin/ForceBranchNamePattern.pm',
+  'PL_FILES' => {},
   'EXE_FILES' => [],
   'PREREQ_PM' => {
-                   'Test::Exception' => 0,
-                   'Test::More' => '0.94',
+                   'Test::FailWarnings' => 0,
                    'Test::Requires::Git' => '1.005',
                    'Capture::Tiny' => 0,
-                   'Log::Any' => 0,
+                   'Test::More' => '0.94',
                    'App::GitHooks' => 0,
-                   'Test::FailWarnings' => 0,
-                   'Test::Git' => 0
+                   'Log::Any' => 0,
+                   'Test::Git' => 0,
+                   'Test::Exception' => 0
                  },
-  'INSTALLDIRS' => 'site',
-  'PL_FILES' => {},
-  'NAME' => 'App::GitHooks::Plugin::ForceBranchNamePattern',
   'test' => {
               'TESTS' => 't/*.t'
-            }
+            },
+  'VERSION_FROM' => 'lib/App/GitHooks/Plugin/ForceBranchNamePattern.pm',
+  'INSTALLDIRS' => 'site',
+  'NAME' => 'App::GitHooks::Plugin::ForceBranchNamePattern'
 )
 ;
