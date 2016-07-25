@@ -21,7 +21,7 @@ name: App-GitHooks-Plugin-ForceBranchNamePattern
 provides:
   App::GitHooks::Plugin::ForceBranchNamePattern:
     file: lib/App/GitHooks/Plugin/ForceBranchNamePattern.pm
-    version: v1.1.1
+    version: v1.1.2
 requires:
   App::GitHooks: '0'
   Log::Any: '0'
@@ -31,4 +31,4 @@ resources:
   homepage: https://metacpan.org/release/App-GitHooks-Plugin-ForceBranchNamePattern
   license: http://dev.perl.org/licenses/
   repository: https://github.com/guillaumeaubert/App-GitHooks-Plugin-ForceBranchNamePattern
-version: v1.1.1
+version: v1.1.2
